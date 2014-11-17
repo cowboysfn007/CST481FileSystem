@@ -10,7 +10,7 @@ public class FileSystem {
     }
 
     public void changeDirectory(String input){
-        System.out.println("wooo!!");
+        System.out.println("wowie kazoaie!!");
     }
 
     public void printWorkingDirectory(){

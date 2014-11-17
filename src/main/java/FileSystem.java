@@ -14,7 +14,7 @@ public class FileSystem {
     }
 
     public void printWorkingDirectory(){
-        System.out.println("wooo!!");
+        System.out.println("nananananananaananan batman!!");
     }
 
     public void read(String input){

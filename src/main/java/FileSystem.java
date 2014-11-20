@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.Arrays;
+
 /**
  * Created by rob on 11/6/14.
  */
@@ -10,7 +12,7 @@ public class FileSystem {
     }
 
     public void changeDirectory(String input){
-        System.out.println("wowie kazoaie!!");
+        System.out.println(input);
     }
 
     public void printWorkingDirectory(){

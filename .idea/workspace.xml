@@ -64,13 +64,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Metadata.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Metadata.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Metadata.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="25" selection-start="3647" selection-end="3647" vertical-scroll-proportion="0.9335494" vertical-offset="1242" max-vertical-offset="2628">
+            <state line="101" column="25" selection-start="3647" selection-end="3647" vertical-scroll-proportion="0.0" vertical-offset="1242" max-vertical-offset="2628">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="14" selection-start="1265" selection-end="1265" vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="19062">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="0" selection-start="24" selection-end="24" vertical-scroll-proportion="0.119008265" vertical-offset="0" max-vertical-offset="605">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -178,10 +196,11 @@
         <option value="$PROJECT_DIR$/src/main/java/Permission.java" />
         <option value="$PROJECT_DIR$/src/main/java/File.java" />
         <option value="$PROJECT_DIR$/src/main/java/FileSystemInterface.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/FileSystem.java" />
         <option value="$PROJECT_DIR$/src/main/java/Metadata.java" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -204,7 +223,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
+    <option name="STATE" value="1" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
@@ -274,6 +293,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FileSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FileSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".idea" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -566,12 +599,12 @@
       <workItem from="1415330858441" duration="1063000" />
       <workItem from="1416184660572" duration="4569000" />
       <workItem from="1417050499307" duration="624000" />
-      <workItem from="1417287269466" duration="11548000" />
+      <workItem from="1417287269466" duration="11872000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20113000" />
+    <option name="totallyTimeSpent" value="20437000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1665" y="-4" width="1855" height="1084" extended-state="6" />
@@ -881,13 +914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="18" selection-end="18" vertical-scroll-proportion="0.119008265" vertical-offset="0" max-vertical-offset="605">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="5" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="450">
@@ -913,10 +939,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Metadata.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="25" selection-start="3647" selection-end="3647" vertical-scroll-proportion="0.9335494" vertical-offset="1242" max-vertical-offset="2628">
+        <state line="101" column="25" selection-start="3647" selection-end="3647" vertical-scroll-proportion="0.0" vertical-offset="1242" max-vertical-offset="2628">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="14" selection-start="1265" selection-end="1265" vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="19062">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="24" selection-end="24" vertical-scroll-proportion="0.119008265" vertical-offset="0" max-vertical-offset="605">
+          <folding />
         </state>
       </provider>
     </entry>

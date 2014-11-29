@@ -1,5 +1,6 @@
 package main.java;
 
+import java.io.*;
 import java.util.Scanner;
 /**
  * Created by rob on 11/6/14.
@@ -21,8 +22,13 @@ public class FileSystemInterface {
         while(!exit){
             System.out.print(location);
             input = scanner.nextLine();
-            command = input.split(" ")[0];
-            parameters =  input.split(" ",2)[1];
+            String[] inputSplit = input.split(" ");
+            command = inputSplit[0];
+
+            if(inputSplit.length > 1){
+                parameters =  input.split(" ",2)[1];
+            }else parameters = null;
+
 
             switch (command) {
                 case "set_user":    fileSystem.setUser(parameters);

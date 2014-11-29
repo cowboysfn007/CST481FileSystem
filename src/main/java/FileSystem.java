@@ -7,6 +7,13 @@ import java.util.Arrays;
  */
 public class FileSystem {
 
+    private String currentUser;
+    private Metadata metadata;
+
+    public FileSystem(){
+        metadata = new Metadata(new java.io.File("src/main/resources/dataset/FS_Meta.txt"));
+    }
+
     public void setUser(String input){
         System.out.println("wooo!!");
     }
@@ -32,7 +39,7 @@ public class FileSystem {
     }
 
     public void listMetadata(){
-        System.out.println("wooo!!");
+        metadata.listRules();
     }
 
     public void removeMetadata(String input){

@@ -1,0 +1,6 @@
+Users: user1 user2 user3
+Directory: dir1 Owner: user1 ACE: user2 allow rw
+Directory: dir2 Owner: user2 ACE: user3 deny w
+Directory: dir3 Owner: user3 ACE: user1 deny rw ACE: user2 allow rw
+File: foo1.txt Owner: user1 ACE: user1 deny rw ACE: user2 allow r
+File: foo2.txt Owner: user2 ACE: user3 deny w

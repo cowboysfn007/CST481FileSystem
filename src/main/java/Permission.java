@@ -15,6 +15,10 @@ public class Permission {
         this.action = action;
     }
 
+    public String toString() {
+        return " ACE: " + user + " " + access + " " + action;
+    }
+
     public String getUser() {
         return user;
     }

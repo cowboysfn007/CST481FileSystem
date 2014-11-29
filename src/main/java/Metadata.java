@@ -82,6 +82,39 @@ public class Metadata {
 
     }
 
+    public void removeRule(String ruleNumber){
+        String[] numberSplit = ruleNumber.split("-");
+
+        Set<String> directoryKeys = directories.keySet();
+        int i = 0;
+        int j;
+        for(String key: directoryKeys){
+            j = 0;
+            for(Permission permission: directories.get(key).getPermissions()){
+                if(i == Integer.parseInt(numberSplit[0])  && j == Integer.parseInt(numberSplit[1])){
+                    directories.get(key).getPermissions().remove(j);
+                    return;
+                }
+                j++;
+            }
+            i++;
+        }
+
+        Set<String> fileKeys = files.keySet();
+        for(String key: fileKeys){
+            j=0;
+            for(Permission permission: files.get(key).getPermissions()){
+                if(i == Integer.parseInt(numberSplit[0])  && j == Integer.parseInt(numberSplit[1])){
+                    files.get(key).getPermissions().remove(j);
+                    return;
+                }
+                j++;
+            }
+            i++;
+        }
+
+    }
+
     public void saveChanges(java.io.File metadataFile){
         try{
             FileWriter fw = new FileWriter(metadataFile.getAbsoluteFile());
@@ -95,11 +128,19 @@ public class Metadata {
             }
             bw.newLine();
 
+            //Write directories
             Set<String> directoryKeys = directories.keySet();
             for(String key: directoryKeys){
                 bw.write("Directory: " + directories.get(key).toString());
+                bw.newLine();
             }
-            bw.newLine();
+
+            //Write Files
+            Set<String> fileKeys = files.keySet();
+            for(String key: fileKeys){
+                bw.write("File: " + files.get(key).toString());
+                bw.newLine();
+            }
 
             bw.close();
         }catch(IOException e){System.out.println(e.getMessage());}

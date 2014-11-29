@@ -18,6 +18,14 @@ public class File {
         this.permissions = permissions;
     }
 
+    public String toString(){
+        String permissionString = "";
+        for(Permission permission: permissions){
+            permissionString += permission.toString();
+        }
+        return name + " Owner: " + owner + permissionString;
+    }
+
     public String getName() {
         return name;
     }

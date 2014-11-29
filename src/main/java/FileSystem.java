@@ -11,7 +11,7 @@ public class FileSystem {
     private Metadata metadata;
 
     public FileSystem(){
-        metadata = new Metadata(new java.io.File("src/main/resources/dataset/FS_Meta.txt"));
+        metadata = new Metadata(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
 
     public void setUser(String input){
@@ -42,8 +42,9 @@ public class FileSystem {
         metadata.listRules();
     }
 
-    public void removeMetadata(String input){
+    public void removeMetadata(String ruleNumber){
         System.out.println("wooo!!");
-        metadata.saveChanges(new java.io.File("src/main/resources/dataset/test.txt"));
+        metadata.removeRule(ruleNumber);
+        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
 }

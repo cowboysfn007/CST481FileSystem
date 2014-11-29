@@ -44,5 +44,6 @@ public class FileSystem {
 
     public void removeMetadata(String input){
         System.out.println("wooo!!");
+        metadata.saveChanges(new java.io.File("src/main/resources/dataset/test.txt"));
     }
 }

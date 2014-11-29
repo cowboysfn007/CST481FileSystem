@@ -1,8 +1,6 @@
 package main.java;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
@@ -85,8 +83,26 @@ public class Metadata {
     }
 
     public void saveChanges(java.io.File metadataFile){
+        try{
+            FileWriter fw = new FileWriter(metadataFile.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
 
+            //Write Users
+            bw.write("Users: ");
+            Set<String> userKeys = users.keySet();
+            for(String key: userKeys){
+                bw.write(users.get(key).getName() + " ");
+            }
+            bw.newLine();
 
+            Set<String> directoryKeys = directories.keySet();
+            for(String key: directoryKeys){
+                bw.write("Directory: " + directories.get(key).toString());
+            }
+            bw.newLine();
+
+            bw.close();
+        }catch(IOException e){System.out.println(e.getMessage());}
     }
 
     private void buildUsers(String userLine){

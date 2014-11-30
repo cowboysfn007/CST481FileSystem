@@ -1,9 +1,6 @@
 package main.java;
 
-import javax.swing.*;
-import java.io.*;
 import java.io.File;
-import java.util.Arrays;
 
 
 /**
@@ -13,11 +10,10 @@ public class FileSystem extends FileSystemInterface{
 
     private String rootDir = "src/main/resources/dataset";
     private String workingDir = "";
-    private String currentUser;
     private Metadata metadata;
 
     public FileSystem(){
-        metadata = new Metadata(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+        metadata = new Metadata(new java.io.File(rootDir + "/FS_Meta1.txt"));
     }
 
     public void setUser(String input){
@@ -26,13 +22,19 @@ public class FileSystem extends FileSystemInterface{
 
     public void changeDirectory(String input){
 
-        String test = rootDir + workingDir + "/" + input;
-        File temp = new File(test);
+        if (input.equals("..")) {
+            int lastIndex = workingDir.lastIndexOf("/");
+            if (lastIndex != -1) {
+                workingDir = workingDir.substring(0,lastIndex);
+            }
+        }else {
+            String temp = rootDir + workingDir + "/" + input;
+            File dir = new File(temp);
 
-        if (temp.exists()) {
-            workingDir = workingDir + "/" + input;
+            if (dir.exists() && !(input.contains(".") && input.length() < 2)) {
+                workingDir = workingDir + "/" + input;
+            } else System.out.println("cd: " + input + ": No such file or directory found");
         }
-        else System.out.println("cd: " + input + " No such file or directory found");
     }
 
     public void printWorkingDirectory(){
@@ -49,7 +51,7 @@ public class FileSystem extends FileSystemInterface{
 
     public void changeMetadata(String parameters){
         metadata.changeRule(parameters);
-        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+        metadata.saveChanges(new java.io.File(rootDir + "/FS_Meta1.txt"));
     }
 
     public void listMetadata(){
@@ -58,9 +60,9 @@ public class FileSystem extends FileSystemInterface{
 
     public void removeMetadata(String ruleNumber){
         metadata.removeRule(ruleNumber);
-        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+        metadata.saveChanges(new java.io.File(rootDir + "/FS_Meta1.txt"));
     }
-    
+
     public String getWorkingDir() {
         return workingDir;
     }

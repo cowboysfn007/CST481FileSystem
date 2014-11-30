@@ -1,6 +1,7 @@
 package main.java;
 
 import java.io.File;
+import java.util.Arrays;
 
 
 /**
@@ -19,23 +20,36 @@ public class FileSystem extends FileSystemInterface{
 
     public void setUser(String user){
         currentUser = user;
+        workingDir = "";
     }
 
     public void changeDirectory(String input){
+        //Split input to check for permissions
+        String[] inputArray = input.split("/");
 
-        if (input.equals("..")) {
-            int lastIndex = workingDir.lastIndexOf("/");
-            if (lastIndex != -1) {
-                workingDir = workingDir.substring(0,lastIndex);
-            }
-        }else {
-            String temp = rootDir + workingDir + "/" + input;
-            File dir = new File(temp);
-
-            if (dir.exists() && !(input.contains(".") && input.length() < 2)) {
-                workingDir = workingDir + "/" + input;
-            } else System.out.println("cd: " + input + ": No such file or directory found");
+        //Check user permissions to directory
+        Boolean allow = true;
+        for (int i=0; i<inputArray.length; i++) {
+            allow = metadata.hasPermission(currentUser, "r", inputArray[i]);
+            if (allow == false) break;
         }
+
+        //If user is allowed access to directory change directory
+        if (allow) {
+            if (input.equals("..")) {
+                int lastIndex = workingDir.lastIndexOf("/");
+                if (lastIndex != -1) {
+                    workingDir = workingDir.substring(0, lastIndex);
+                }
+            } else {
+                String temp = rootDir + workingDir + "/" + input;
+                File dir = new File(temp);
+
+                if (dir.exists() && !(input.contains(".") && input.length() < 2)) {
+                    workingDir = workingDir + "/" + input;
+                } else System.out.println("cd: " + input + ": No such file or directory found");
+            }
+        }else System.out.println("Error: You do not have access to directory");
     }
 
     public void printWorkingDirectory(){

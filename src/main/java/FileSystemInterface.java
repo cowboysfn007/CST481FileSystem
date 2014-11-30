@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class FileSystemInterface {
 
     public static void main(String args[]) {
-        
+
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         String input;

@@ -10,6 +10,7 @@ public class FileSystem extends FileSystemInterface{
 
     private String rootDir = "src/main/resources/dataset";
     private String workingDir = "";
+    private String currentUser;
     private Metadata metadata;
 
     public FileSystem(){

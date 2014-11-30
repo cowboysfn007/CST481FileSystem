@@ -47,4 +47,8 @@ public class FileSystem {
         metadata.removeRule(ruleNumber);
         metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
+
+    public void help(){
+        System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
+    }
 }

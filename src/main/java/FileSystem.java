@@ -48,6 +48,10 @@ public class FileSystem extends FileSystemInterface{
 
     public void write(String parameters){
         String[] parameterSplit = parameters.split(" ", 2);
+        if(parameterSplit.length < 2){
+            System.out.println("Incorrect Write Operation");
+            return;
+        }
         String resource = parameterSplit[0];
         String value = parameterSplit[1];
 

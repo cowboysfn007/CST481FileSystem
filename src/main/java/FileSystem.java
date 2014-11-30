@@ -1,7 +1,6 @@
 package main.java;
 
 import java.io.File;
-import java.util.Arrays;
 
 
 /**
@@ -9,13 +8,13 @@ import java.util.Arrays;
  */
 public class FileSystem extends FileSystemInterface{
 
-    private String rootDir = "src/main/resources/dataset";
+    private String rootDir = "src/main/resources/dataset/top";
     private String workingDir = "";
     private String currentUser;
     private Metadata metadata;
 
     public FileSystem(){
-        metadata = new Metadata(new java.io.File(rootDir + "/FS_Meta1.txt"));
+        metadata = new Metadata(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
 
     public void setUser(String user){
@@ -81,7 +80,7 @@ public class FileSystem extends FileSystemInterface{
 
     public void changeMetadata(String parameters){
         metadata.changeRule(parameters);
-        metadata.saveChanges(new java.io.File(rootDir + "/FS_Meta1.txt"));
+        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
 
     public void listMetadata(){
@@ -90,7 +89,7 @@ public class FileSystem extends FileSystemInterface{
 
     public void removeMetadata(String ruleNumber){
         metadata.removeRule(ruleNumber);
-        metadata.saveChanges(new java.io.File(rootDir + "/FS_Meta1.txt"));
+        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
 
     public String getWorkingDir() {

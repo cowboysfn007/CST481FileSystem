@@ -64,33 +64,36 @@ public class Metadata {
         }
 
         if(isFile){
-            if(files.get(resource).getOwner().equals(user)){
-                hasPermission = true;
-            }
-            ArrayList<Permission> filePermissions = files.get(resource).getPermissions();
-            for(Permission permission: filePermissions){
-                if(permission.getUser().equals(user) &&  permission.getAccess().equals("allow") && permission.getAction().contains(action)){
+            if(files.containsKey(resource)){
+                if(files.get(resource).getOwner().equals(user)){
                     hasPermission = true;
                 }
-                else if(permission.getUser().equals(user) &&  permission.getAccess().equals("deny") && permission.getAction().contains(action)){
-                    hasPermission =false;
+                ArrayList<Permission> filePermissions = files.get(resource).getPermissions();
+                for(Permission permission: filePermissions){
+                    if(permission.getUser().equals(user) &&  permission.getAccess().equals("allow") && permission.getAction().contains(action)){
+                        hasPermission = true;
+                    }
+                    else if(permission.getUser().equals(user) &&  permission.getAccess().equals("deny") && permission.getAction().contains(action)){
+                        hasPermission =false;
+                    }
                 }
             }
         }
         else{
-            if(directories.get(resource).getOwner().equals(user)){
-                hasPermission = true;
-            }
-            ArrayList<Permission> directoryPermissions = directories.get(resource).getPermissions();
-            for(Permission permission: directoryPermissions){
-                if(permission.getUser().equals(user) &&  permission.getAccess().equals("allow") && permission.getAction().contains(action)){
+            if(directories.containsKey(resource)){
+                if(directories.get(resource).getOwner().equals(user)){
                     hasPermission = true;
                 }
-                else if(permission.getUser().equals(user) &&  permission.getAccess().equals("deny") && permission.getAction().contains(action)){
-                    hasPermission =false;
+                ArrayList<Permission> directoryPermissions = directories.get(resource).getPermissions();
+                for(Permission permission: directoryPermissions){
+                    if(permission.getUser().equals(user) &&  permission.getAccess().equals("allow") && permission.getAction().contains(action)){
+                        hasPermission = true;
+                    }
+                    else if(permission.getUser().equals(user) &&  permission.getAccess().equals("deny") && permission.getAction().contains(action)){
+                        hasPermission =false;
+                    }
                 }
             }
-
 
         }
 

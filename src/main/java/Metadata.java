@@ -64,7 +64,7 @@ public class Metadata {
         for(String key: directoryKeys){
             j = 0;
             for(Permission permission: directories.get(key).getPermissions()){
-                System.out.println(i + "-" + j + ": " + "Directory: " + directories.get(key).getName() + " ACE: " + permission.getUser() + " " + permission.getAccess() + " " + permission.getAction());
+                System.out.println(i + "-" + j + ": " + "Directory: " + directories.get(key).getName() + " Owner: " + directories.get(key).getOwner() + " ACE: " + permission.getUser() + " " + permission.getAccess() + " " + permission.getAction());
                 j++;
             }
             i++;
@@ -74,7 +74,7 @@ public class Metadata {
         for(String key: fileKeys){
             j=0;
             for(Permission permission: files.get(key).getPermissions()){
-                System.out.println(i + "-" + j + ": " + "File: " + files.get(key).getName() + " ACE: " + permission.getUser() + " " + permission.getAccess() + " " + permission.getAction());
+                System.out.println(i + "-" + j + ": " + "File: " + files.get(key).getName() + " Owner: " + files.get(key).getOwner() +  " ACE: " + permission.getUser() + " " + permission.getAccess() + " " + permission.getAction());
                 j++;
             }
             i++;
@@ -112,6 +112,59 @@ public class Metadata {
             }
             i++;
         }
+
+    }
+
+    public void changeRule(String parameters){
+        //Parse Input
+        String[] parameterSplit =  parameters.split(" ",2);
+        String fileName = parameterSplit[0];
+        String rules = parameterSplit[1];
+        rules = rules.substring(1, rules.length()-1);
+        String ruleSplit[] = rules.split("\\|");
+
+        //Determine if file or folder
+        Pattern filePattern = Pattern.compile("(.txt)$");
+        Matcher fileMatcher = filePattern.matcher(fileName);
+        Boolean isFile = false;
+        if(fileMatcher.find()){
+            isFile = true;
+        }
+
+        //Determine if changing owner or adding permission
+        Pattern ownerLine = Pattern.compile("^(Owner:)");
+        Matcher ownerMatcher;
+        Pattern permissionPattern = Pattern.compile("^(ACE:)");
+        Matcher permissionMatcher;
+
+
+        for(String rule: ruleSplit){
+            rule = rule.trim();
+            ownerMatcher = ownerLine.matcher(rule);
+            permissionMatcher = permissionPattern.matcher(rule);
+            if(ownerMatcher.find()){
+                if(isFile){
+                    files.get(fileName).setOwner(rule.split(" ")[1]);
+                }
+                else{
+                    directories.get(fileName).setOwner(rule.split(" ")[1]);
+                }
+            }
+            else if(permissionMatcher.find()){
+                String permissionSplit[] = rule.split(" ");
+                if(isFile){
+                    files.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+                }
+                else{
+                    directories.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+                }
+            }
+            else{
+                System.out.println("Improper Format for: " + rule);
+            }
+        }
+
+
 
     }
 

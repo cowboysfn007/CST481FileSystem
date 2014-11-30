@@ -47,8 +47,9 @@ public class FileSystem extends FileSystemInterface{
         System.out.println("wooo!!");
     }
 
-    public void changeMetadata(String input){
-        System.out.println("wooo!!");
+    public void changeMetadata(String parameters){
+        metadata.changeRule(parameters);
+        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
 
     public void listMetadata(){
@@ -56,12 +57,15 @@ public class FileSystem extends FileSystemInterface{
     }
 
     public void removeMetadata(String ruleNumber){
-        System.out.println("wooo!!");
         metadata.removeRule(ruleNumber);
         metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
-
+    
     public String getWorkingDir() {
         return workingDir;
+    }
+
+    public void help(){
+        System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
     }
 }

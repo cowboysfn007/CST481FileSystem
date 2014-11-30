@@ -49,6 +49,8 @@ public class FileSystemInterface {
                     break;
                 case "rm":          fileSystem.removeMetadata(parameters);
                     break;
+                case "help":        fileSystem.help();
+                    break;
                 case "exit":        System.out.println("Exiting Program...");
                                     exit = true;
                     break;

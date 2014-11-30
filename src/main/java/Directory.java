@@ -29,6 +29,14 @@ public class Directory {
         return owner;
     }
 
+    public void setOwner(String owner){
+        this.owner = owner;
+    }
+
+    public void appendPermission(Permission permission){
+        permissions.add(permission);
+    }
+
     public ArrayList<Permission> getPermissions(){
         return permissions;
     }

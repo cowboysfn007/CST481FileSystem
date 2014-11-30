@@ -34,8 +34,9 @@ public class FileSystem {
         System.out.println("wooo!!");
     }
 
-    public void changeMetadata(String input){
-        System.out.println("wooo!!");
+    public void changeMetadata(String parameters){
+        metadata.changeRule(parameters);
+        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }
 
     public void listMetadata(){
@@ -43,7 +44,6 @@ public class FileSystem {
     }
 
     public void removeMetadata(String ruleNumber){
-        System.out.println("wooo!!");
         metadata.removeRule(ruleNumber);
         metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
     }

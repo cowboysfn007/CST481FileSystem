@@ -49,4 +49,8 @@ public class File {
     public void setPermissions(ArrayList<Permission> permissions) {
         this.permissions = permissions;
     }
+
+    public void appendPermission(Permission permission){
+        permissions.add(permission);
+    }
 }

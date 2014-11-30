@@ -7,19 +7,21 @@ import java.util.Scanner;
  */
 public class FileSystemInterface {
 
+    public static void main(String args[]) {
 
-    public static void main(String args[]){
-    	
+
+
     	//clearConsole();
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         String input;
         String command;
         String parameters;
-        String location = "home$ ";
         FileSystem fileSystem = new FileSystem();
 
         while(!exit){
+            String directory = fileSystem.getWorkingDir();
+            String location = "home" + directory + "$ ";
             System.out.print(location);
             input = scanner.nextLine();
             String[] inputSplit = input.split(" ");
@@ -55,7 +57,7 @@ public class FileSystemInterface {
             }
         }
     }
-    
+
     public final static void clearConsole()
     {
         try

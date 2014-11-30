@@ -1,12 +1,18 @@
 package main.java;
 
+import javax.swing.*;
+import java.io.*;
+import java.io.File;
 import java.util.Arrays;
+
 
 /**
  * Created by rob on 11/6/14.
  */
-public class FileSystem {
+public class FileSystem extends FileSystemInterface{
 
+    private String rootDir = "src/main/resources/dataset";
+    private String workingDir = "";
     private String currentUser;
     private Metadata metadata;
 
@@ -19,11 +25,18 @@ public class FileSystem {
     }
 
     public void changeDirectory(String input){
-        System.out.println(input);
+
+        String test = rootDir + workingDir + "/" + input;
+        File temp = new File(test);
+
+        if (temp.exists()) {
+            workingDir = workingDir + "/" + input;
+        }
+        else System.out.println("cd: " + input + " No such file or directory found");
     }
 
     public void printWorkingDirectory(){
-        System.out.println("nananananananaananan batman!!");
+        System.out.println(workingDir);
     }
 
     public void read(String resource){
@@ -57,6 +70,10 @@ public class FileSystem {
     public void removeMetadata(String ruleNumber){
         metadata.removeRule(ruleNumber);
         metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+    }
+    
+    public String getWorkingDir() {
+        return workingDir;
     }
 
     public void help(){

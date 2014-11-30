@@ -16,8 +16,8 @@ public class FileSystem extends FileSystemInterface{
         metadata = new Metadata(new java.io.File(rootDir + "/FS_Meta1.txt"));
     }
 
-    public void setUser(String input){
-        System.out.println("wooo!!");
+    public void setUser(String user){
+        currentUser = user;
     }
 
     public void changeDirectory(String input){
@@ -41,12 +41,23 @@ public class FileSystem extends FileSystemInterface{
         System.out.println(workingDir);
     }
 
-    public void read(String input){
-        System.out.println("wooo!!");
+    public void read(String resource){
+        //TODO, use the metadata function to find out if user has permission to do requested function, sample below.
+        System.out.println(metadata.hasPermission(currentUser, "r", resource));
+
+        //TODO Read logic goes here!!!
     }
 
-    public void write(String input){
-        System.out.println("wooo!!");
+    public void write(String parameters){
+        String[] parameterSplit = parameters.split(" ", 2);
+        String resource = parameterSplit[0];
+        String value = parameterSplit[1];
+
+        //TODO, use the metadata.hasPermission function to find out if the current user has permission to do requested function, then do it, sample below
+        System.out.println(metadata.hasPermission(currentUser, "w", resource));
+        System.out.println(value);
+
+        //TODO Write logic goes here!!!
     }
 
     public void changeMetadata(String parameters){

@@ -259,6 +259,10 @@ public class Metadata {
         return name;
     }
 
+    public boolean userExists(String userName){
+        return users.containsKey(userName);
+    }
+
     private void buildUsers(String userLine){
         String[] userList = userLine.split(" ");
         for(int i = 1; i < userList.length; i++){

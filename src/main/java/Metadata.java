@@ -162,7 +162,7 @@ public class Metadata {
 
     public void changeRule(String parameters){
         //Parse Input
-        String[] parameterSplit =  parameters.split(" ",2);
+        String[] parameterSplit =  parameters.split(" ", 2);
         String fileName = parameterSplit[0];
         String rules = parameterSplit[1];
         rules = rules.substring(1, rules.length()-1);
@@ -275,7 +275,7 @@ public class Metadata {
         ArrayList<Permission> permissions = new ArrayList<>();
         String directoryName = "";
         String directoryOwner = "";
-        String directoryPassword = "";
+        Password directoryPassword = new Password();
 
         for (int i = 0; i < directorySplit.length; ) {
 
@@ -295,7 +295,7 @@ public class Metadata {
             }
 
             else if (directorySplit[i].equals("Passwd")) {
-                directoryPassword = directorySplit[i+1];
+                directoryPassword = Password.setPassword(directorySplit[i+1]);
                 i += 2;
             }
 

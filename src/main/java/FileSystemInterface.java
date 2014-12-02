@@ -9,9 +9,6 @@ public class FileSystemInterface {
 
     public static void main(String args[]) {
 
-
-
-    	//clearConsole();
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         String input;
@@ -49,6 +46,10 @@ public class FileSystemInterface {
                     break;
                 case "rm":          fileSystem.removeMetadata(parameters);
                     break;
+                case "passwd":      fileSystem.setPassword(parameters);
+                    break;
+                case "lp":          fileSystem.listPasswords();
+                    break;
                 case "help":        fileSystem.help();
                     break;
                 case "exit":        System.out.println("Exiting Program...");
@@ -57,27 +58,6 @@ public class FileSystemInterface {
                 default:            System.out.println("Invalid Input");
                     break;
             }
-        }
-    }
-
-    public final static void clearConsole()
-    {
-        try
-        {
-            final String os = System.getProperty("os.name");
-
-            if (os.contains("Windows"))
-            {
-                Runtime.getRuntime().exec("cls");
-            }
-            else
-            {
-                Runtime.getRuntime().exec("clear");
-            }
-        }
-        catch (final Exception e)
-        {
-            //  Handle any exceptions.
         }
     }
 }

@@ -15,6 +15,7 @@ public class Metadata {
     private Hashtable<String, User> users;
     private Hashtable<String, Directory> directories;
     private Hashtable<String, File> files;
+    private Hashtable<String, Password> passwords;
 
     public Metadata(java.io.File metadataFile){
         try{

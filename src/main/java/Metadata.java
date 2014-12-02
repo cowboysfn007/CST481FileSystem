@@ -3,6 +3,7 @@ package main.java;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -198,10 +199,25 @@ public class Metadata {
             else if(permissionMatcher.find()){
                 String permissionSplit[] = rule.split(" ");
                 if(isFile){
-                    files.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+                    if(!files.containsKey(fileName)){
+                        ArrayList<Permission> newPermissions = new ArrayList<>();
+                        newPermissions.add(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+                        files.put(fileName,new File(fileName, getDefaultUser(), newPermissions, new Password()));
+                    }
+                    else{
+                        files.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+                    }
                 }
                 else{
-                    directories.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+                    if(!directories.containsKey(fileName)){
+                        ArrayList<Permission> newPermissions = new ArrayList<>();
+                        newPermissions.add(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+                        directories.put(fileName, new Directory(fileName, getDefaultUser(), newPermissions, new Password()));
+                    }
+                    else{
+                        directories.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
+
+                    }
                 }
             }
             else{

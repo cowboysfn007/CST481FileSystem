@@ -1,7 +1,17 @@
 package main.java;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 /**
@@ -56,11 +66,35 @@ public class FileSystem extends FileSystemInterface{
         System.out.println(workingDir);
     }
 
-    public void read(String resource){
+    public void read(String resource)  {
         //TODO, use the metadata function to find out if user has permission to do requested function, sample below.
         System.out.println(metadata.hasPermission(currentUser, "r", resource));
 
         //TODO Read logic goes here!!!
+        Path foo1 = Paths.get("src/main/resources/dataset/top/foo1.txt");
+//        return Files.readAllLines(foo1, Charset.defaultCharset());
+       if(Files.exists(foo1) && Files.isReadable(foo1)) {
+
+        try {
+            // File reader
+            BufferedReader reader = Files.newBufferedReader(foo1, Charset.defaultCharset());
+
+            String line;
+            // read each line
+            while((line = reader.readLine()) != null) {
+                System.out.println(line);
+                // tokenize each number
+                StringTokenizer tokenizer = new StringTokenizer(line, " ");
+                while (tokenizer.hasMoreElements()) {
+                    // parse each integer in file
+                    int element = Integer.parseInt(tokenizer.nextToken());
+                }
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       }
     }
 
     public void write(String parameters){
@@ -77,6 +111,8 @@ public class FileSystem extends FileSystemInterface{
         System.out.println(value);
 
         //TODO Write logic goes here!!!
+//        Path path = Paths.get(aFileName);
+//        Files.write(path, aLines, ENCODING);
     }
 
     public void changeMetadata(String parameters){

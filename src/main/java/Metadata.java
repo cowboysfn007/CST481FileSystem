@@ -301,7 +301,7 @@ public class Metadata {
 
             else i++;
         }
-        
+
         directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions, directoryPassword));
     }
 

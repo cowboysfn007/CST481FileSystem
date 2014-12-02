@@ -46,6 +46,10 @@ public class FileSystemInterface {
                     break;
                 case "rm":          fileSystem.removeMetadata(parameters);
                     break;
+                case "passwd":      fileSystem.setPassword(parameters);
+                    break;
+                case "lp":          fileSystem.listPasswords();
+                    break;
                 case "help":        fileSystem.help();
                     break;
                 case "exit":        System.out.println("Exiting Program...");

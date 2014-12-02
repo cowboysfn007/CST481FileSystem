@@ -1,6 +1,7 @@
 package main.java;
 
 import java.io.File;
+import java.util.Scanner;
 
 
 /**
@@ -96,6 +97,18 @@ public class FileSystem extends FileSystemInterface{
         return workingDir;
     }
 
+    public void setPassword(String resource) {
+        if (resource != null) {
+            System.out.print("Enter new password for " + resource + ": ");
+            Scanner scan = new Scanner(System.in);
+            String password = scan.nextLine();
+            new Password(resource, password);
+        }
+    }
+
+    public void listPasswords() {
+
+    }
     public void help(){
         System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
     }

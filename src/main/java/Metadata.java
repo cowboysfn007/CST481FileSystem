@@ -243,6 +243,21 @@ public class Metadata {
         }catch(IOException e){System.out.println(e.getMessage());}
     }
 
+    public String getDefaultUser(){
+        Set<String> userKeys = users.keySet();
+        String name = "";
+        if(userKeys.size() < 1){
+            System.out.println("No users available");
+        }
+        else {
+            for(String key: userKeys){
+                name = users.get(key).getName();
+
+            }
+        }
+        return name;
+    }
+
     private void buildUsers(String userLine){
         String[] userList = userLine.split(" ");
         for(int i = 1; i < userList.length; i++){
@@ -275,4 +290,5 @@ public class Metadata {
 
         files.put(fileName, new File(fileName, fileOwner, permissions));
     }
+
 }

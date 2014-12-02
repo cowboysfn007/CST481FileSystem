@@ -21,7 +21,7 @@ public class FileSystemInterface {
 
         while(!exit){
             String directory = fileSystem.getWorkingDir();
-            String location = "home" + directory + "$ ";
+            String location = fileSystem.getCurrentUser() + directory + "$ ";
             System.out.print(location);
             input = scanner.nextLine();
             String[] inputSplit = input.split(" ");

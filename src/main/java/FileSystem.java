@@ -15,6 +15,7 @@ public class FileSystem extends FileSystemInterface{
 
     public FileSystem(){
         metadata = new Metadata(new java.io.File(rootDir + "/FS_Meta1.txt"));
+        currentUser = metadata.getDefaultUser();
     }
 
     public void setUser(String user){
@@ -85,5 +86,9 @@ public class FileSystem extends FileSystemInterface{
 
     public void help(){
         System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
+    }
+
+    public String getCurrentUser(){
+        return currentUser;
     }
 }

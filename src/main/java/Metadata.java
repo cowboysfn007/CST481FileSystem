@@ -268,15 +268,44 @@ public class Metadata {
 
     private void buildDirectory(String directoryLine){
         String[] directorySplit = directoryLine.split(" ");
-        String directoryName = directorySplit[1];
-        String directoryOwner = directorySplit[3];
         ArrayList<Permission> permissions = new ArrayList<>();
+        String directoryName = "";
+        String directoryOwner = "";
+        String directoryPassword = "";
 
-        for(int i = 4; i < directorySplit.length; i += 4){
-            permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
+        for (int i = 0; i < directorySplit.length; ) {
+
+            if (directorySplit[i].equals("Directory")) {
+                directoryName = directorySplit[i+1];
+                i += 2;
+            }
+
+            else if (directorySplit[i].equals("Owner")) {
+                directoryOwner = directorySplit[i+1];
+                i += 2;
+            }
+
+            else if (directorySplit[i].equals("ACE")) {
+                permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
+                i += 4;
+            }
+
+            else if (directorySplit[i].equals("Passwd")) {
+                directoryPassword = directorySplit[i+1];
+                i += 2;
+            }
+
+            else i++;
         }
+        //directoryName = directorySplit[1];
+        //directoryOwner = directorySplit[3];
+        //ArrayList<Permission> permissions = new ArrayList<>();
 
-        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions));
+        //for(int i = 4; i < directorySplit.length; i += 4){
+        //    permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
+        //}
+
+        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions, directoryPassword));
     }
 
     private void buildFile(String fileLine){

@@ -26,11 +26,19 @@ public class FileSystem extends FileSystemInterface{
 
     public FileSystem(){
         metadata = new Metadata(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+        currentUser = metadata.getDefaultUser();
     }
 
     public void setUser(String user){
-        currentUser = user;
-        workingDir = "";
+        if(metadata.userExists(user)){
+            currentUser = user;
+            workingDir = "";
+        }
+        else{
+            System.out.println("User does not exist");
+        }
+
+
     }
 
     public void changeDirectory(String input){
@@ -138,7 +146,7 @@ public class FileSystem extends FileSystemInterface{
             System.out.print("Enter new password for " + resource + ": ");
             Scanner scan = new Scanner(System.in);
             String password = scan.nextLine();
-            new Password(resource, password);
+            new Password(password);
         }
     }
 
@@ -147,5 +155,9 @@ public class FileSystem extends FileSystemInterface{
     }
     public void help(){
         System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
+    }
+
+    public String getCurrentUser(){
+        return currentUser;
     }
 }

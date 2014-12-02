@@ -162,7 +162,7 @@ public class Metadata {
 
     public void changeRule(String parameters){
         //Parse Input
-        String[] parameterSplit =  parameters.split(" ",2);
+        String[] parameterSplit =  parameters.split(" ", 2);
         String fileName = parameterSplit[0];
         String rules = parameterSplit[1];
         rules = rules.substring(1, rules.length()-1);
@@ -244,6 +244,25 @@ public class Metadata {
         }catch(IOException e){System.out.println(e.getMessage());}
     }
 
+    public String getDefaultUser(){
+        Set<String> userKeys = users.keySet();
+        String name = "";
+        if(userKeys.size() < 1){
+            System.out.println("No users available");
+        }
+        else {
+            for(String key: userKeys){
+                name = users.get(key).getName();
+
+            }
+        }
+        return name;
+    }
+
+    public boolean userExists(String userName){
+        return users.containsKey(userName);
+    }
+
     private void buildUsers(String userLine){
         String[] userList = userLine.split(" ");
         for(int i = 1; i < userList.length; i++){
@@ -253,15 +272,44 @@ public class Metadata {
 
     private void buildDirectory(String directoryLine){
         String[] directorySplit = directoryLine.split(" ");
-        String directoryName = directorySplit[1];
-        String directoryOwner = directorySplit[3];
         ArrayList<Permission> permissions = new ArrayList<>();
+        String directoryName = "";
+        String directoryOwner = "";
+        Password directoryPassword = new Password();
 
-        for(int i = 4; i < directorySplit.length; i += 4){
-            permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
+        for (int i = 0; i < directorySplit.length; ) {
+
+            if (directorySplit[i].equals("Directory")) {
+                directoryName = directorySplit[i+1];
+                i += 2;
+            }
+
+            else if (directorySplit[i].equals("Owner")) {
+                directoryOwner = directorySplit[i+1];
+                i += 2;
+            }
+
+            else if (directorySplit[i].equals("ACE")) {
+                permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
+                i += 4;
+            }
+
+            else if (directorySplit[i].equals("Passwd")) {
+                directoryPassword = Password.setPassword(directorySplit[i+1]);
+                i += 2;
+            }
+
+            else i++;
         }
+        //directoryName = directorySplit[1];
+        //directoryOwner = directorySplit[3];
+        //ArrayList<Permission> permissions = new ArrayList<>();
 
-        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions));
+        //for(int i = 4; i < directorySplit.length; i += 4){
+        //    permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
+        //}
+
+        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions, directoryPassword));
     }
 
     private void buildFile(String fileLine){
@@ -276,4 +324,5 @@ public class Metadata {
 
         files.put(fileName, new File(fileName, fileOwner, permissions));
     }
+
 }

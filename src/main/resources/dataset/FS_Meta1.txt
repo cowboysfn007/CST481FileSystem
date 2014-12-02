@@ -1,7 +1,6 @@
-Users: user3 user2 user1
-Directory: dir1 Passwd: test
+Users: user3 user2 user1 
 Directory: dir3 Owner: user2 ACE: user2 allow rw ACE: user1 deny rw
 Directory: dir2 Owner: user2 ACE: user3 deny w
-Directory: dir1 Owner: user3 ACE: user1 deny rw ACE: user3 deny w
+Directory: dir1 Owner: user3 ACE: user3 deny w
 File: foo1.txt Owner: user2 ACE: user1 deny rw ACE: user2 allow r
 File: foo2.txt Owner: user1 ACE: user3 deny w ACE: user1 deny rw

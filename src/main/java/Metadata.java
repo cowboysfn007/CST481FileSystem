@@ -322,7 +322,7 @@ public class Metadata {
             permissions.add(new Permission(fileSplit[i+1], fileSplit[i+2], fileSplit[i+3]));
         }
 
-        files.put(fileName, new File(fileName, fileOwner, permissions));
+        files.put(fileName, new File(fileName, fileOwner, permissions, new Password()));
     }
 
 }

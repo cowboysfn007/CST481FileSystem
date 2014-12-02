@@ -295,7 +295,7 @@ public class Metadata {
             }
 
             else if (directorySplit[i].equals("Passwd")) {
-                directoryPassword = Password.setPassword(directorySplit[i+1]);
+                directoryPassword.setPassword(directorySplit[i+1]);
                 i += 2;
             }
 

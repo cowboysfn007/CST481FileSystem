@@ -13,6 +13,16 @@ public class Password {
         this.saltPassword = createSaltPassword(password);
     }
 
+    public Password(){
+        password = "";
+        saltPassword = "";
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+        this.saltPassword = password + "";
+    }
+
     public String createSaltPassword(String passwd) {
         String salted = "";
 

@@ -5,12 +5,10 @@ package main.java;
  */
 public class Password {
 
-    private String resource;
     private String password;
     private String saltPassword;
 
-    public Password(String resource, String password) {
-        this.resource = resource;
+    public Password(String password) {
         this.password = password;
         this.saltPassword = createSaltPassword(password);
     }
@@ -19,5 +17,17 @@ public class Password {
         String salted = "";
 
         return salted;
+    }
+
+    public boolean isSet(){
+        boolean isSet = false;
+        if(password != null && !password.isEmpty()){
+            isSet = true;
+        }
+        return isSet;
+    }
+
+    public String getPassword(){
+        return password;
     }
 }

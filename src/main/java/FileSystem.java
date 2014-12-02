@@ -20,8 +20,15 @@ public class FileSystem extends FileSystemInterface{
     }
 
     public void setUser(String user){
-        currentUser = user;
-        workingDir = "";
+        if(metadata.userExists(user)){
+            currentUser = user;
+            workingDir = "";
+        }
+        else{
+            System.out.println("User does not exist");
+        }
+
+
     }
 
     public void changeDirectory(String input){
@@ -103,7 +110,7 @@ public class FileSystem extends FileSystemInterface{
             System.out.print("Enter new password for " + resource + ": ");
             Scanner scan = new Scanner(System.in);
             String password = scan.nextLine();
-            new Password(resource, password);
+            new Password(password);
         }
     }
 

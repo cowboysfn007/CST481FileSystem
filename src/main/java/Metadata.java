@@ -279,36 +279,29 @@ public class Metadata {
 
         for (int i = 0; i < directorySplit.length; ) {
 
-            if (directorySplit[i].equals("Directory")) {
+            if (directorySplit[i].equals("Directory:")) {
                 directoryName = directorySplit[i+1];
                 i += 2;
             }
 
-            else if (directorySplit[i].equals("Owner")) {
+            else if (directorySplit[i].equals("Owner:")) {
                 directoryOwner = directorySplit[i+1];
                 i += 2;
             }
 
-            else if (directorySplit[i].equals("ACE")) {
+            else if (directorySplit[i].equals("ACE:")) {
                 permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
                 i += 4;
             }
 
-            else if (directorySplit[i].equals("Passwd")) {
-                directoryPassword.setPassword(directorySplit[i+1]);
+            else if (directorySplit[i].equals("Passwd:")) {
+                directoryPassword.setPassword(directorySplit[i + 1]);
                 i += 2;
             }
 
             else i++;
         }
-        //directoryName = directorySplit[1];
-        //directoryOwner = directorySplit[3];
-        //ArrayList<Permission> permissions = new ArrayList<>();
-
-        //for(int i = 4; i < directorySplit.length; i += 4){
-        //    permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
-        //}
-
+        
         directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions, directoryPassword));
     }
 

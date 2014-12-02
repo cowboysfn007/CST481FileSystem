@@ -2,7 +2,4 @@
 *.iws
 out/
 .idea/
-*.userlibraries
-.classpath
-*.eml
 bin/

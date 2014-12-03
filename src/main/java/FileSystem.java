@@ -156,7 +156,17 @@ public class FileSystem extends FileSystemInterface{
         }
     }
     public void help(){
-        System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
+        System.out.println("    set_user <user>             changes current user to given user if they exist in metadate file ex. set_user user1");
+        System.out.println("    cd <dir>                    changes current directory to directory given.  ex. cd dir1");
+        System.out.println("    pwd                         print working directory. ex pwd");
+        System.out.println("    read <resource>             if resource is directory, list contents, if files, displays file.  ex. read foo1.txt");
+        System.out.println("    write <resource> <value>    if directory, renames to value, if text file, changes value to new value  ex. write foo2.txt bar");
+        System.out.println("    cm <resource> [Owner: <user> | <ACE: <principal><type><perm>],  (“change metadata”) ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
+        System.out.println("    lm                          list metadata, lists all rules and numbers them for use in removing");
+        System.out.println("    rm <num>                    remove rule, removes a rule based on the number given, number can be found with 'list metadata'  ex. rm 2-1");
+        System.out.println("    passwd <resource>           adds password to resource given, will be prompted for password, changes if already there.  ex. passwd dir1");
+        System.out.println("    lp [<resource>]             lists all passwords if no resource given, lists password for resource if given.  ex. lp foo1.txt");
+
     }
 
     public String getCurrentUser(){

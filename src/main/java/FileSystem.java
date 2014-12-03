@@ -2,6 +2,7 @@ package main.java;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -41,33 +42,24 @@ public class FileSystem extends FileSystemInterface{
 
     }
 
-    public void changeDirectory(String input){
-        //Split input to check for permissions
-        String[] inputArray = input.split("/");
-
-        //Check user permissions to directory
-        Boolean allow = true;
-        for (int i=0; i<inputArray.length; i++) {
-            allow = metadata.hasPermission(currentUser, "r", inputArray[i]);
-            if (allow == false) break;
-        }
+    public void changeDirectory(String resource){
 
         //If user is allowed access to directory change directory
-        if (allow) {
-            if (input.equals("..")) {
+        if (checkDirPermission(resource)) {
+            if (resource.equals("..")) {
                 int lastIndex = workingDir.lastIndexOf("/");
                 if (lastIndex != -1) {
                     workingDir = workingDir.substring(0, lastIndex);
                 }
             } else {
-                String temp = rootDir + workingDir + "/" + input;
+                String temp = rootDir + workingDir + "/" + resource;
                 File dir = new File(temp);
 
-                if (dir.exists() && !(input.contains(".") && input.length() < 2)) {
-                    workingDir = workingDir + "/" + input;
-                } else System.out.println("cd: " + input + ": No such file or directory found");
+                if (dir.exists() && !(resource.contains(".") && resource.length() < 2)) {
+                    workingDir = workingDir + "/" + resource;
+                } else System.out.println("cd: " + resource + ": No such file or directory found");
             }
-        }else System.out.println("Error: You do not have access to directory");
+        }else System.out.println("Error: You do not have access to the directory");
     }
 
     public void printWorkingDirectory(){
@@ -75,18 +67,22 @@ public class FileSystem extends FileSystemInterface{
     }
 
     public void read(String resource)  {
-        //TODO, use the metadata function to find out if user has permission to do requested function, sample below.
-        System.out.println(metadata.hasPermission(currentUser, "r", resource));
+        File file = new File(rootDir + workingDir + "/" + resource);
 
-        //TODO Read logic goes here!!!
-        Path file = Paths.get(rootDir + workingDir + "/" + resource);
-      
-        if(metadata.hasPermission(currentUser, "r", resource)) { 
-        	if(Files.exists(file) && Files.isReadable(file)) {
+        if(file.isDirectory()) {
+            if(checkDirPermission(resource)) {
+                File[] fileList = file.listFiles();
+                for (File f : fileList) {
+                    System.out.println(f.getName());
+                }
+            } else System.out.println("Error: You do not have access to the directory");
+        }
+        else if(metadata.hasPermission(currentUser, "r", resource)) {
+        	if(file.exists() && file.canRead()) {
 
         		try {
         			// File reader
-        			BufferedReader reader = Files.newBufferedReader(file, Charset.defaultCharset());
+        			BufferedReader reader = new BufferedReader(new FileReader(file));
 
         			String line;
         			// read each line
@@ -98,7 +94,7 @@ public class FileSystem extends FileSystemInterface{
         			e.printStackTrace();
         		}
         	}
-        }
+        } else System.out.println("Error: You do not have access to read the file");
     }
 
     public void write(String parameters){
@@ -171,5 +167,18 @@ public class FileSystem extends FileSystemInterface{
 
     public String getCurrentUser(){
         return currentUser;
+    }
+
+    public Boolean checkDirPermission(String resource) {
+        //Split input to check for permissions
+        String[] resourceArray = resource.split("/");
+
+        //Check user permissions to directory
+        Boolean allow = true;
+        for (int i=0; i<resourceArray.length; i++) {
+            allow = metadata.hasPermission(currentUser, "r", resourceArray[i]);
+            if (allow == false) break;
+        }
+        return allow;
     }
 }

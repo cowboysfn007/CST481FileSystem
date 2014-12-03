@@ -4,4 +4,4 @@ Directory: dir2 Owner: user2 ACE: user3 deny w Passwd: password
 Directory: dir1 Owner: user3 ACE: user3 deny w Passwd: test
 File: foo1.txt Owner: user2 ACE: user1 deny rw ACE: user2 allow r
 File: bar1.txt Owner: user1 ACE: user1 deny rw
-File: foo2.txt Owner: user1 ACE: user3 deny w ACE: user1 deny rw
+File: foo2.txt Owner: user1 ACE: user3 deny w ACE: user1 deny rw Passwd: password

@@ -287,27 +287,25 @@ public class Metadata {
         }
     }
 
-    private void buildDirectory(String directoryLine){
-        String[] directorySplit = directoryLine.split(" ");
+    private void buildDirectory(String directoryLine) {
         ArrayList<Permission> permissions = new ArrayList<>();
+        String[] directorySplit = directoryLine.split(" ");
         String directoryName = "";
         String directoryOwner = "";
         String directoryPassword;
 
-        for (int i = 0; i < directorySplit.length; ) {
 
-            if (directorySplit[i].equals("Directory:")) {
+        for (int i = 0; i < directorySplit.length; ) {
+            if (directorySplit[i].contains("Directory")) {
                 directoryName = directorySplit[i+1];
                 i += 2;
             }
-
-            else if (directorySplit[i].equals("Owner:")) {
+            else if (directorySplit[i].contains("Owner")) {
                 directoryOwner = directorySplit[i+1];
                 i += 2;
             }
-
-            else if (directorySplit[i].equals("ACE:")) {
-                permissions.add(new Permission(directorySplit[i+1], directorySplit[i+2], directorySplit[i+3]));
+            else if (directorySplit[i].contains("ACE")) {
+                permissions.add(new Permission(directorySplit[i + 1], directorySplit[i + 2], directorySplit[i + 3]));
                 i += 4;
             }
 
@@ -315,26 +313,46 @@ public class Metadata {
                 directoryPassword = directorySplit[i + 1];
                 PasswordManager.addPassword(directoryName, directoryPassword);
 
+
                 i += 2;
             }
-
             else i++;
         }
         
         directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions));
+
     }
 
-    private void buildFile(String fileLine){
-        String[] fileSplit = fileLine.split(" ");
-        String fileName = fileSplit[1];
-        String fileOwner = fileSplit[3];
+    private void buildFile(String fileLine) {
         ArrayList<Permission> permissions = new ArrayList<>();
+        String[] fileSplit = fileLine.split(" ");
+        String fileName = "";
+        String fileOwner = "";
+        String filePassword;
 
-        for(int i = 4; i < fileSplit.length; i += 4){
-            permissions.add(new Permission(fileSplit[i+1], fileSplit[i+2], fileSplit[i+3]));
+        for (int i = 0; i < fileSplit.length; ) {
+            if (fileSplit[i].contains("File")) {
+                fileName = fileSplit[i+1];
+                i += 2;
+            }
+            else if (fileSplit[i].contains("Owner")) {
+                fileOwner = fileSplit[i+1];
+                i += 2;
+            }
+            else if (fileSplit[i].contains("ACE")) {
+                permissions.add(new Permission(fileSplit[i + 1], fileSplit[i + 2], fileSplit[i + 3]));
+                i += 4;
+            }
+            else if (fileSplit[i].contains("Passwd")) {
+                filePassword = fileSplit[i + 1];
+                PasswordManager.addPassword(fileName, filePassword);
+                i += 2;
+            }
+            else i++;
         }
 
         files.put(fileName, new File(fileName, fileOwner, permissions));
+
     }
 
 }

@@ -79,30 +79,26 @@ public class FileSystem extends FileSystemInterface{
         System.out.println(metadata.hasPermission(currentUser, "r", resource));
 
         //TODO Read logic goes here!!!
-        Path foo1 = Paths.get("src/main/resources/dataset/top/foo1.txt");
-//        return Files.readAllLines(foo1, Charset.defaultCharset());
-       if(Files.exists(foo1) && Files.isReadable(foo1)) {
+        Path file = Paths.get(rootDir + workingDir + "/" + resource);
+      
+        if(metadata.hasPermission(currentUser, "r", resource)) { 
+        	if(Files.exists(file) && Files.isReadable(file)) {
 
-        try {
-            // File reader
-            BufferedReader reader = Files.newBufferedReader(foo1, Charset.defaultCharset());
+        		try {
+        			// File reader
+        			BufferedReader reader = Files.newBufferedReader(file, Charset.defaultCharset());
 
-            String line;
-            // read each line
-            while((line = reader.readLine()) != null) {
-                System.out.println(line);
-                // tokenize each number
-                StringTokenizer tokenizer = new StringTokenizer(line, " ");
-                while (tokenizer.hasMoreElements()) {
-                    // parse each integer in file
-                    int element = Integer.parseInt(tokenizer.nextToken());
-                }
-            }
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        			String line;
+        			// read each line
+        			while((line = reader.readLine()) != null) {
+        				System.out.println(line);
+        			}
+        			reader.close();
+        		} catch (Exception e) {
+        			e.printStackTrace();
+        		}
+        	}
         }
-       }
     }
 
     public void write(String parameters){

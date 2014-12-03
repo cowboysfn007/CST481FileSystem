@@ -11,13 +11,11 @@ public class File {
     private String name;
     private String owner;
     private ArrayList<Permission> permissions;
-    private Password password;
 
-    public File(String name, String owner, ArrayList<Permission> permissions, Password password){
+    public File(String name, String owner, ArrayList<Permission> permissions){
         this.name = name;
         this.owner = owner;
         this.permissions = permissions;
-        this.password = password;
     }
 
     public String toString(){
@@ -25,18 +23,8 @@ public class File {
         for(Permission permission: permissions){
             permissionString += permission.toString();
         }
-        if(passwordSet()){
-            permissionString += "Passwd: " + password.getPassword();
-        }
-        return name + " Owner: " + owner + permissionString;
-    }
 
-    public boolean passwordSet(){
-        boolean isSet = false;
-        if(password.isSet()){
-            isSet = true;
-        }
-        return isSet;
+        return name + " Owner: " + owner + permissionString;
     }
 
     public String getName() {

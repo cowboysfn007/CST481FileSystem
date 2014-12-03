@@ -146,12 +146,15 @@ public class FileSystem extends FileSystemInterface{
             System.out.print("Enter new password for " + resource + ": ");
             Scanner scan = new Scanner(System.in);
             String password = scan.nextLine();
-            new Password(password);
+            //new Password(password);
         }
     }
 
     public void listPasswords() {
-
+        System.out.println(PasswordManager.comparePassword("dir1", "test"));
+        System.out.println(PasswordManager.comparePassword("dir1", "fail"));
+        System.out.println(PasswordManager.comparePassword("dir2", "password"));
+        System.out.println(PasswordManager.comparePassword("dir2", "password2"));
     }
     public void help(){
         System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");

@@ -1,43 +1,46 @@
 package main.java;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 /**
  * Created by rparmer on 12/1/14.
  */
 public class Password {
 
     private String password;
-    private String saltPassword;
+    private byte[] saltedPassword;
+    private byte[] salt;
 
-    public Password(String password) {
+    public Password(String password, byte[] saltedPassword, byte[] salt) {
         this.password = password;
-        this.saltPassword = createSaltPassword(password);
+        this.saltedPassword = saltedPassword;
+        this.salt = salt;
     }
 
     public Password(){
-        password = "";
-        saltPassword = "";
+        password = "";;
     }
 
     public void setPassword(String password){
         this.password = password;
-        this.saltPassword = password + "";
-    }
-
-    public String createSaltPassword(String passwd) {
-        String salted = "";
-
-        return salted;
-    }
-
-    public boolean isSet(){
-        boolean isSet = false;
-        if(password != null && !password.isEmpty()){
-            isSet = true;
-        }
-        return isSet;
     }
 
     public String getPassword(){
         return password;
     }
+
+    public byte[] getSalt(){
+        return salt;
+    }
+
+    public byte[] getSaltedPassword(){
+        return saltedPassword;
+    }
+
+    public String toString(){
+        return "Clear Text: " + password + " Salt: " + salt.toString() + " Salted Password: " + saltedPassword.toString();
+    }
+
+
 }

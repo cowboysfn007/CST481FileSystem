@@ -16,10 +16,11 @@ public class Metadata {
     private Hashtable<String, User> users;
     private Hashtable<String, Directory> directories;
     private Hashtable<String, File> files;
-    private Hashtable<String, Password> passwords;
+    private PasswordManager passwordManager;
 
     public Metadata(java.io.File metadataFile){
         try{
+            passwordManager = new PasswordManager();
             users = new Hashtable<>();
             directories = new Hashtable<>();
             files = new Hashtable<>();
@@ -202,7 +203,7 @@ public class Metadata {
                     if(!files.containsKey(fileName)){
                         ArrayList<Permission> newPermissions = new ArrayList<>();
                         newPermissions.add(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
-                        files.put(fileName,new File(fileName, getDefaultUser(), newPermissions, new Password()));
+                        files.put(fileName,new File(fileName, getDefaultUser(), newPermissions));
                     }
                     else{
                         files.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
@@ -212,7 +213,7 @@ public class Metadata {
                     if(!directories.containsKey(fileName)){
                         ArrayList<Permission> newPermissions = new ArrayList<>();
                         newPermissions.add(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
-                        directories.put(fileName, new Directory(fileName, getDefaultUser(), newPermissions, new Password()));
+                        directories.put(fileName, new Directory(fileName, getDefaultUser(), newPermissions));
                     }
                     else{
                         directories.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
@@ -291,7 +292,7 @@ public class Metadata {
         ArrayList<Permission> permissions = new ArrayList<>();
         String directoryName = "";
         String directoryOwner = "";
-        Password directoryPassword = new Password();
+        String directoryPassword;
 
         for (int i = 0; i < directorySplit.length; ) {
 
@@ -311,14 +312,16 @@ public class Metadata {
             }
 
             else if (directorySplit[i].equals("Passwd:")) {
-                directoryPassword.setPassword(directorySplit[i + 1]);
+                directoryPassword = directorySplit[i + 1];
+                PasswordManager.addPassword(directoryName, directoryPassword);
+
                 i += 2;
             }
 
             else i++;
         }
         
-        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions, directoryPassword));
+        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions));
     }
 
     private void buildFile(String fileLine){
@@ -331,7 +334,7 @@ public class Metadata {
             permissions.add(new Permission(fileSplit[i+1], fileSplit[i+2], fileSplit[i+3]));
         }
 
-        files.put(fileName, new File(fileName, fileOwner, permissions, new Password()));
+        files.put(fileName, new File(fileName, fileOwner, permissions));
     }
 
 }

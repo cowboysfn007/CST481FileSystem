@@ -1,5 +1,5 @@
 Users: user3 user2 user1 
-Directory: dir3 Owner: user2 ACE: user2 allow rw ACE: user1 deny rw
+Directory: dir3 Owner: user2 ACE: user2 allow rw ACE: user1 deny rw Passwd: testtest
 Directory: dir2 Owner: user2 ACE: user3 deny w Passwd: boom2
 Directory: dir1 Owner: user3 ACE: user3 deny w Passwd: test
 File: foo1.txt Owner: user2 ACE: user1 deny rw ACE: user2 allow r Passwd: boom

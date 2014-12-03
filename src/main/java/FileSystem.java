@@ -45,7 +45,7 @@ public class FileSystem extends FileSystemInterface{
     public void changeDirectory(String resource){
 
         //If user is allowed access to directory change directory
-        if (checkDirPermission(resource)) {
+        if (checkDirPermission(resource) && checkForPassword(resource)) {
             if (resource.equals("..")) {
                 int lastIndex = workingDir.lastIndexOf("/");
                 if (lastIndex != -1) {
@@ -69,7 +69,7 @@ public class FileSystem extends FileSystemInterface{
     public void read(String resource)  {
         File file = new File(rootDir + workingDir + "/" + resource);
 
-        if(file.isDirectory()) {
+        if(file.isDirectory() && checkForPassword(resource)) {
             if(checkDirPermission(resource)) {
                 File[] fileList = file.listFiles();
                 for (File f : fileList) {
@@ -77,7 +77,7 @@ public class FileSystem extends FileSystemInterface{
                 }
             } else System.out.println("Error: You do not have access to the directory");
         }
-        else if(metadata.hasPermission(currentUser, "r", resource)) {
+        else if(metadata.hasPermission(currentUser, "r", resource) && checkForPassword(resource)) {
         	if(file.exists() && file.canRead()) {
 
         		try {
@@ -135,10 +135,12 @@ public class FileSystem extends FileSystemInterface{
 
     public void setPassword(String resource) {
         if (resource != null) {
-            System.out.print("Enter new password for " + resource + ": ");
+            String[] resourceArray = resource.split("/");
+            System.out.print("Enter new password for " + resourceArray[resourceArray.length-1] + ": ");
             Scanner scan = new Scanner(System.in);
             String password = scan.nextLine();
-            PasswordManager.addPassword(resource, password);
+
+            PasswordManager.addPassword(resourceArray[resourceArray.length-1], password);
             metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
         }
     }
@@ -169,16 +171,35 @@ public class FileSystem extends FileSystemInterface{
         return currentUser;
     }
 
-    public Boolean checkDirPermission(String resource) {
+    public boolean checkDirPermission(String resource) {
         //Split input to check for permissions
         String[] resourceArray = resource.split("/");
 
         //Check user permissions to directory
-        Boolean allow = true;
+        boolean allow = true;
         for (int i=0; i<resourceArray.length; i++) {
             allow = metadata.hasPermission(currentUser, "r", resourceArray[i]);
             if (allow == false) break;
         }
         return allow;
+    }
+
+    public boolean checkForPassword(String resource) {
+        String[] resourceArray = resource.split("/");
+
+        for (int i=0; i<resourceArray.length; i++) {
+            if(PasswordManager.hasPassword(resourceArray[i])) {
+                Scanner scan = new Scanner(System.in);
+                System.out.print("Enter password for " + resourceArray[i] + ": ");
+                String passwd = scan.nextLine();
+
+                boolean validPW = PasswordManager.comparePassword(resourceArray[i], passwd);
+                if (!validPW) {
+                    System.out.println("Invalid Password");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

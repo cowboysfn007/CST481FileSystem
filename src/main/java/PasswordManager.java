@@ -88,6 +88,13 @@ public class PasswordManager {
         return hash;
     }
 
+    public static boolean hasPassword(String resource) {
+        boolean password = false;
+        if(passwordTable.containsKey(resource)){
+            password = true;
+        }
+        return password;
+    }
 
 
 

@@ -20,7 +20,7 @@ public class Password {
     }
 
     public Password(){
-        password = "";;
+        password = "";
     }
 
     public void setPassword(String password){

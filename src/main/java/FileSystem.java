@@ -142,15 +142,18 @@ public class FileSystem extends FileSystemInterface{
             System.out.print("Enter new password for " + resource + ": ");
             Scanner scan = new Scanner(System.in);
             String password = scan.nextLine();
-            //new Password(password);
+            PasswordManager.addPassword(resource, password);
+            metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
         }
     }
 
-    public void listPasswords() {
-        System.out.println(PasswordManager.comparePassword("dir1", "test"));
-        System.out.println(PasswordManager.comparePassword("dir1", "fail"));
-        System.out.println(PasswordManager.comparePassword("dir2", "password"));
-        System.out.println(PasswordManager.comparePassword("dir2", "password2"));
+    public void listPasswords(String resource) {
+        if(!resource.isEmpty()){
+            PasswordManager.listPassword(resource);
+        }
+        else{
+            PasswordManager.listAllPasswords();
+        }
     }
     public void help(){
         System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");

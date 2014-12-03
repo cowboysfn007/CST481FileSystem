@@ -7,6 +7,7 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.Set;
 
 
 /**
@@ -40,8 +41,28 @@ public class PasswordManager {
         return matches;
     }
 
-    public static void listPassword(){
+    public static void listAllPasswords(){
+        Set<String> keys = passwordTable.keySet();
+        for(String key: keys){
+            System.out.println(key + ": " + passwordTable.get(key).toString());
+        }
+    }
 
+    public static void listPassword(String resource){
+        if(passwordTable.containsKey(resource)){
+            System.out.println(resource + ": " + passwordTable.get(resource).toString());
+        }
+        else{
+            System.out.println(resource + " does not have a password set.");
+        }
+    }
+
+    public static String getPassword(String resource){
+        String password = "";
+        if(passwordTable.containsKey(resource)){
+            password = passwordTable.get(resource).getPassword();
+        }
+        return password;
     }
 
     private static byte[] getNextSalt(){

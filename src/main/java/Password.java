@@ -1,6 +1,7 @@
 package main.java;
 
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -39,7 +40,7 @@ public class Password {
     }
 
     public String toString(){
-        return "Clear Text: " + password + " Salt: " + salt.toString() + " Salted Password: " + saltedPassword.toString();
+        return "Clear Text: " + password + " Salt: " + Arrays.toString(salt) + " Salted Password: " + Arrays.toString(saltedPassword);
     }
 
 

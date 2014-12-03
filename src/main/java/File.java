@@ -23,8 +23,13 @@ public class File {
         for(Permission permission: permissions){
             permissionString += permission.toString();
         }
+        String password = PasswordManager.getPassword(name);
+        String passwordString = "";
+        if(!password.isEmpty()){
+            passwordString = " Passwd: " + password;
+        }
 
-        return name + " Owner: " + owner + permissionString;
+        return name + " Owner: " + owner + permissionString + passwordString;
     }
 
     public String getName() {

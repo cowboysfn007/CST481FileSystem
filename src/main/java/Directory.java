@@ -23,7 +23,13 @@ public class Directory {
             permissionString += permission.toString();
         }
 
-        return name + " Owner: " + owner + permissionString;
+        String password = PasswordManager.getPassword(name);
+        String passwordString = "";
+        if(!password.isEmpty()){
+            passwordString = " Passwd: " + password;
+        }
+
+        return name + " Owner: " + owner + permissionString + passwordString;
     }
 
     public String getOwner(){

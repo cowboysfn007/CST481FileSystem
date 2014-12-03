@@ -26,7 +26,7 @@ public class FileSystemInterface {
 
             if(inputSplit.length > 1){
                 parameters =  input.split(" ",2)[1];
-            }else parameters = null;
+            }else parameters = "";
 
 
             switch (command) {
@@ -48,7 +48,7 @@ public class FileSystemInterface {
                     break;
                 case "passwd":      fileSystem.setPassword(parameters);
                     break;
-                case "lp":          fileSystem.listPasswords();
+                case "lp":          fileSystem.listPasswords(parameters);
                     break;
                 case "help":        fileSystem.help();
                     break;

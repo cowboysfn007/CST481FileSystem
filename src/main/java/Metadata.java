@@ -16,10 +16,11 @@ public class Metadata {
     private Hashtable<String, User> users;
     private Hashtable<String, Directory> directories;
     private Hashtable<String, File> files;
-    private Hashtable<String, Password> passwords;
+    private PasswordManager passwordManager;
 
     public Metadata(java.io.File metadataFile){
         try{
+            passwordManager = new PasswordManager();
             users = new Hashtable<>();
             directories = new Hashtable<>();
             files = new Hashtable<>();
@@ -202,7 +203,7 @@ public class Metadata {
                     if(!files.containsKey(fileName)){
                         ArrayList<Permission> newPermissions = new ArrayList<>();
                         newPermissions.add(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
-                        files.put(fileName,new File(fileName, getDefaultUser(), newPermissions, new Password()));
+                        files.put(fileName,new File(fileName, getDefaultUser(), newPermissions));
                     }
                     else{
                         files.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
@@ -212,7 +213,7 @@ public class Metadata {
                     if(!directories.containsKey(fileName)){
                         ArrayList<Permission> newPermissions = new ArrayList<>();
                         newPermissions.add(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
-                        directories.put(fileName, new Directory(fileName, getDefaultUser(), newPermissions, new Password()));
+                        directories.put(fileName, new Directory(fileName, getDefaultUser(), newPermissions));
                     }
                     else{
                         directories.get(fileName).appendPermission(new Permission(permissionSplit[1], permissionSplit[2], permissionSplit[3]));
@@ -291,7 +292,9 @@ public class Metadata {
         String[] directorySplit = directoryLine.split(" ");
         String directoryName = "";
         String directoryOwner = "";
-        Password directoryPassword = new Password();
+        String directoryPassword;
+
+
         for (int i = 0; i < directorySplit.length; ) {
             if (directorySplit[i].contains("Directory")) {
                 directoryName = directorySplit[i+1];
@@ -305,13 +308,19 @@ public class Metadata {
                 permissions.add(new Permission(directorySplit[i + 1], directorySplit[i + 2], directorySplit[i + 3]));
                 i += 4;
             }
-            else if (directorySplit[i].contains("Passwd")) {
-                directoryPassword.setPassword(directorySplit[i + 1]);
+
+            else if (directorySplit[i].equals("Passwd:")) {
+                directoryPassword = directorySplit[i + 1];
+                PasswordManager.addPassword(directoryName, directoryPassword);
+
+
                 i += 2;
             }
             else i++;
         }
-        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions, directoryPassword));
+        
+        directories.put(directoryName, new Directory(directoryName, directoryOwner, permissions));
+
     }
 
     private void buildFile(String fileLine) {
@@ -319,7 +328,8 @@ public class Metadata {
         String[] fileSplit = fileLine.split(" ");
         String fileName = "";
         String fileOwner = "";
-        Password filePassword = new Password();
+        String filePassword;
+
         for (int i = 0; i < fileSplit.length; ) {
             if (fileSplit[i].contains("File")) {
                 fileName = fileSplit[i+1];
@@ -334,12 +344,15 @@ public class Metadata {
                 i += 4;
             }
             else if (fileSplit[i].contains("Passwd")) {
-                filePassword.setPassword(fileSplit[i + 1]);
+                filePassword = fileSplit[i + 1];
+                PasswordManager.addPassword(fileName, filePassword);
                 i += 2;
             }
             else i++;
         }
-        files.put(fileName, new File(fileName, fileOwner, permissions, filePassword));
+
+        files.put(fileName, new File(fileName, fileOwner, permissions));
+
     }
 
 }

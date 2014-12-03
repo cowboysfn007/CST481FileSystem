@@ -149,8 +149,17 @@ public class FileSystem extends FileSystemInterface{
     public void listPasswords() {
 
     }
-    public void help(){
-        System.out.println("cm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
+
+    public void help() {
+        System.out.println("System Commands:");
+        System.out.println("\tset_user <user>");
+        System.out.println("\tcd <dir>");
+        System.out.println("\tpwd");
+        System.out.println("\tread <resource>");
+        System.out.println("\twrite <resource>");
+        System.out.println("\tcm (“change metadata”) <resource> [Owner: <user> | <ACE: <principal><type><perm>]  ex. cm foo1.txt [Owner: user1 | ACE: user2 allow rw]");
+        System.out.println("\tlm (“list metadata”)");
+        System.out.println("\trm (“remove metadata”) <num>");
     }
 
     public String getCurrentUser(){

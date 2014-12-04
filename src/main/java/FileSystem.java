@@ -200,22 +200,22 @@ public class FileSystem extends FileSystemInterface{
         return allow;
     }
 
-//    public boolean checkForPassword(String resource) {
-//        String[] resourceArray = resource.split("/");
-//
-//        for (int i=0; i<resourceArray.length; i++) {
-//            if(PasswordManager.hasPassword(resourceArray[i])) {
-//                Scanner scan = new Scanner(System.in);
-//                System.out.print("Enter password for " + resourceArray[i] + ": ");
-//                String passwd = scan.nextLine();
-//
-//                boolean validPW = PasswordManager.comparePassword(resourceArray[i], passwd);
-//                if (!validPW) {
-//                    System.out.println("Invalid Password");
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
+    public boolean checkForPassword(String resource) {
+        String[] resourceArray = resource.split("/");
+
+        for (int i=0; i<resourceArray.length; i++) {
+            if(PasswordManager.hasPassword(resourceArray[i])) {
+                Scanner scan = new Scanner(System.in);
+                System.out.print("Enter password for " + resourceArray[i] + ": ");
+                String passwd = scan.nextLine();
+
+                boolean validPW = PasswordManager.comparePassword(resourceArray[i], passwd);
+                if (!validPW) {
+                    System.out.println("Invalid Password");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

@@ -1,8 +1,10 @@
 package main.java;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -98,23 +100,37 @@ public class FileSystem extends FileSystemInterface{
     }
 
     public void write(String parameters){
-        String[] parameterSplit = parameters.split(" ", 2);
-        if(parameterSplit.length < 2){
-            System.out.println("Incorrect Write Operation");
-            return;
-        }
-        String resource = parameterSplit[0];
-        String value = parameterSplit[1];
+    	String[] parameterSplit = parameters.split(" ", 2);
+    	if(parameterSplit.length < 2){
+    		System.out.println("Incorrect Write Operation");
+    		return;
+    	}
+    	String resource = parameterSplit[0];
+    	String value = parameterSplit[1];
 
-        //TODO, use the metadata.hasPermission function to find out if the current user has permission to do requested function, then do it, sample below
-        System.out.println(metadata.hasPermission(currentUser, "w", resource));
-        System.out.println(value);
+    	//TODO, use the metadata.hasPermission function to find out if the current user has permission to do requested function, then do it, sample below
+    	System.out.println(metadata.hasPermission(currentUser, "w", resource));
+    	System.out.println(value);
 
-        //TODO Write logic goes here!!!
-//        Path path = Paths.get(aFileName);
-//        Files.write(path, aLines, ENCODING);
+    	//TODO Write logic goes here!!!
+    	try {
+    		File file = new File(rootDir + workingDir + "/" + resource);
+    		if (file.exists()) {
+    			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+    			BufferedWriter bw = new BufferedWriter(fw);
+    			bw.write(value);
+    			bw.close();
+
+    			System.out.println("Added new content");
+    		}
+    		else {
+    			System.out.println("File does not exsits");
+    		}
+
+    	} catch (IOException e) {
+    		e.printStackTrace(); 
+    	}
     }
-
     public void changeMetadata(String parameters){
         metadata.changeRule(parameters);
         metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
@@ -184,22 +200,22 @@ public class FileSystem extends FileSystemInterface{
         return allow;
     }
 
-    public boolean checkForPassword(String resource) {
-        String[] resourceArray = resource.split("/");
-
-        for (int i=0; i<resourceArray.length; i++) {
-            if(PasswordManager.hasPassword(resourceArray[i])) {
-                Scanner scan = new Scanner(System.in);
-                System.out.print("Enter password for " + resourceArray[i] + ": ");
-                String passwd = scan.nextLine();
-
-                boolean validPW = PasswordManager.comparePassword(resourceArray[i], passwd);
-                if (!validPW) {
-                    System.out.println("Invalid Password");
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+//    public boolean checkForPassword(String resource) {
+//        String[] resourceArray = resource.split("/");
+//
+//        for (int i=0; i<resourceArray.length; i++) {
+//            if(PasswordManager.hasPassword(resourceArray[i])) {
+//                Scanner scan = new Scanner(System.in);
+//                System.out.print("Enter password for " + resourceArray[i] + ": ");
+//                String passwd = scan.nextLine();
+//
+//                boolean validPW = PasswordManager.comparePassword(resourceArray[i], passwd);
+//                if (!validPW) {
+//                    System.out.println("Invalid Password");
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 }

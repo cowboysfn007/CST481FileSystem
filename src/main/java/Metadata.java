@@ -16,11 +16,9 @@ public class Metadata {
     private Hashtable<String, User> users;
     private Hashtable<String, Directory> directories;
     private Hashtable<String, File> files;
-    private PasswordManager passwordManager;
 
     public Metadata(java.io.File metadataFile){
         try{
-            passwordManager = new PasswordManager();
             users = new Hashtable<>();
             directories = new Hashtable<>();
             files = new Hashtable<>();
@@ -51,6 +49,14 @@ public class Metadata {
 
         }catch (IOException e){
             System.out.println("Bad File" + e.getMessage());
+        }
+    }
+
+    public void updateDirectory(String oldResource, String newResource){
+        if(directories.containsKey(oldResource)){
+            Directory directory = directories.remove(oldResource);
+            directories.put(newResource, directory);
+
         }
     }
 

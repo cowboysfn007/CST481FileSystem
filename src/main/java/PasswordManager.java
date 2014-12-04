@@ -96,6 +96,11 @@ public class PasswordManager {
         return password;
     }
 
-
+    public static void updateDirectory(String oldResource, String newResource){
+        if(passwordTable.containsKey(oldResource)){
+            Password password = passwordTable.get(oldResource);
+            passwordTable.put(newResource, password);
+        }
+    }
 
 }

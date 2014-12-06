@@ -6,15 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 
 /**
@@ -26,9 +18,10 @@ public class FileSystem extends FileSystemInterface{
     private String workingDir = "";
     private String currentUser;
     private Metadata metadata;
+    private File metadataFile = new File("src/main/resources/dataset/FS_Meta1.txt");
 
     public FileSystem(){
-        metadata = new Metadata(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+        metadata = new Metadata(metadataFile);
         currentUser = metadata.getDefaultUser();
     }
 
@@ -108,32 +101,40 @@ public class FileSystem extends FileSystemInterface{
     	String resource = parameterSplit[0];
     	String value = parameterSplit[1];
 
-    	//TODO, use the metadata.hasPermission function to find out if the current user has permission to do requested function, then do it, sample below
-    	System.out.println(metadata.hasPermission(currentUser, "w", resource));
-    	System.out.println(value);
 
-    	//TODO Write logic goes here!!!
     	try {
     		File file = new File(rootDir + workingDir + "/" + resource);
-    		if (file.exists()) {
-    			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-    			BufferedWriter bw = new BufferedWriter(fw);
-    			bw.write(value);
-    			bw.close();
-
-    			System.out.println("Added new content");
+    		if (file.exists() && file.isFile()) {
+                if(metadata.hasPermission(currentUser, "w", resource) && checkForPassword(resource)){
+                    FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(value);
+                    bw.close();
+                    System.out.println("Added new content");
+                }
+                else{System.out.println("Don't have permission");}
     		}
+            else if(file.exists() && file.isDirectory()){
+                if(metadata.hasPermission(currentUser, "w", resource)  && checkForPassword(resource)){
+                    File newDirectory = new File(rootDir + workingDir + "/" + value);
+                    file.renameTo(newDirectory);
+                    PasswordManager.updateDirectory(resource, value);
+                    metadata.updateDirectory(resource, value);
+                    metadata.saveChanges(metadataFile);
+                }
+                else{System.out.println("Don't have permission");}
+            }
     		else {
-    			System.out.println("File does not exsits");
+    			System.out.println("File does not exist");
     		}
 
     	} catch (IOException e) {
-    		e.printStackTrace(); 
+    		e.printStackTrace();
     	}
     }
     public void changeMetadata(String parameters){
         metadata.changeRule(parameters);
-        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+        metadata.saveChanges(metadataFile);
     }
 
     public void listMetadata(){
@@ -142,7 +143,7 @@ public class FileSystem extends FileSystemInterface{
 
     public void removeMetadata(String ruleNumber){
         metadata.removeRule(ruleNumber);
-        metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+        metadata.saveChanges(metadataFile);
     }
 
     public String getWorkingDir() {
@@ -157,7 +158,7 @@ public class FileSystem extends FileSystemInterface{
             String password = scan.nextLine();
 
             PasswordManager.addPassword(resourceArray[resourceArray.length-1], password);
-            metadata.saveChanges(new java.io.File("src/main/resources/dataset/FS_Meta1.txt"));
+            metadata.saveChanges(metadataFile);
         }
     }
 

@@ -55,6 +55,7 @@ public class Metadata {
     public void updateDirectory(String oldResource, String newResource){
         if(directories.containsKey(oldResource)){
             Directory directory = directories.remove(oldResource);
+            directory.setName(newResource);
             directories.put(newResource, directory);
 
         }

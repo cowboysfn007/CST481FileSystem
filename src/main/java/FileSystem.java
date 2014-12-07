@@ -40,21 +40,23 @@ public class FileSystem extends FileSystemInterface{
     public void changeDirectory(String resource){
 
         //If user is allowed access to directory change directory
-        if (checkDirPermission(resource) && checkForPassword(resource)) {
-            if (resource.equals("..")) {
-                int lastIndex = workingDir.lastIndexOf("/");
-                if (lastIndex != -1) {
-                    workingDir = workingDir.substring(0, lastIndex);
-                }
-            } else {
-                String temp = rootDir + workingDir + "/" + resource;
-                File dir = new File(temp);
+        if (resource.length() > 0) {
+            if (checkDirPermission(resource) && checkForPassword(resource)) {
+                if (resource.equals("..")) {
+                    int lastIndex = workingDir.lastIndexOf("/");
+                    if (lastIndex != -1) {
+                        workingDir = workingDir.substring(0, lastIndex);
+                    }
+                } else {
+                    String temp = rootDir + workingDir + "/" + resource;
+                    File dir = new File(temp);
 
-                if (dir.exists() && !(resource.contains(".") && resource.length() < 2)) {
-                    workingDir = workingDir + "/" + resource;
-                } else System.out.println("cd: " + resource + ": No such file or directory found");
-            }
-        }else System.out.println("Error: You do not have access to the directory");
+                    if (dir.exists() && !(resource.contains(".") && resource.length() < 2)) {
+                        workingDir = workingDir + "/" + resource;
+                    } else System.out.println("cd: " + resource + ": No such file or directory found");
+                }
+            } else System.out.println("Error: You do not have access to the directory");
+        } else System.out.println("Invalid Resource");
     }
 
     public void printWorkingDirectory(){

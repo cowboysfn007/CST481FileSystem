@@ -104,6 +104,7 @@ public class FileSystem extends FileSystemInterface{
     	String value = parameterSplit[1];
 
 
+
     	try {
     		File file = new File(rootDir + workingDir + "/" + resource);
     		if (file.exists() && file.isFile()) {
@@ -117,6 +118,10 @@ public class FileSystem extends FileSystemInterface{
                 else{System.out.println("Don't have permission");}
     		}
             else if(file.exists() && file.isDirectory()){
+                if (value.contains(" ")) {
+                    System.out.println("Error: Directory name cannot contain spaces");
+                    return;
+                }
                 if(metadata.hasPermission(currentUser, "w", resource)  && checkForPassword(resource)){
                     File newDirectory = new File(rootDir + workingDir + "/" + value);
                     file.renameTo(newDirectory);

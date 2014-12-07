@@ -100,6 +100,7 @@ public class PasswordManager {
         if(passwordTable.containsKey(oldResource)){
             Password password = passwordTable.get(oldResource);
             passwordTable.put(newResource, password);
+            passwordTable.remove(oldResource);
         }
     }
 

@@ -103,5 +103,4 @@ public class PasswordManager {
             passwordTable.remove(oldResource);
         }
     }
-
 }

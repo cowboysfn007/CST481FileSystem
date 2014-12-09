@@ -1,6 +1,5 @@
 package main.java;
 
-import java.io.*;
 import java.util.Scanner;
 /**
  * Created by rob on 11/6/14.

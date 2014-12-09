@@ -59,8 +59,9 @@ public class FileSystem extends FileSystemInterface{
         } else System.out.println("Invalid Resource");
     }
 
-    public void printWorkingDirectory(){
-        System.out.println(workingDir);
+    public void printWorkingDirectory() {
+        if (workingDir == "") System.out.println("/");
+        else System.out.println(workingDir);
     }
 
     public void read(String resource)  {

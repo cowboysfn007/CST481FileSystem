@@ -98,9 +98,8 @@ public class PasswordManager {
 
     public static void updateDirectory(String oldResource, String newResource){
         if(passwordTable.containsKey(oldResource)){
-            Password password = passwordTable.get(oldResource);
+            Password password = passwordTable.remove(oldResource);
             passwordTable.put(newResource, password);
-            passwordTable.remove(oldResource);
         }
     }
 }
